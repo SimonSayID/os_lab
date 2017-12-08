@@ -5,9 +5,12 @@
 #ifndef OS_LAB_MIAN_H
 #define OS_LAB_MIAN_H
 
+#define OBJ_PERM (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP)
+
 #include <stdio.h>
 #include <sched.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
