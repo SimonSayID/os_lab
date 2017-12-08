@@ -15,10 +15,8 @@ union semun {
 };
 
 void system_v_sem() {
-    int perms;
     int sem_id;
     pid_t p1;
-    perms = S_IRUSR | S_IWUSR;
 
     p1 = fork();
     if (p1 == -1) {
@@ -26,7 +24,7 @@ void system_v_sem() {
     } else if (p1 == 0) {
         sleep(2);
         struct sembuf sops;
-        sem_id = semget(SV_SEM_KEY, 0, perms);
+        sem_id = semget(SV_SEM_KEY, 0, OBJ_PERM);
         sops.sem_num = 0;
         sops.sem_op = -1;
         sops.sem_flg = 0;
@@ -42,7 +40,7 @@ void system_v_sem() {
         int r;
         union semun arg;
         struct sembuf sops;
-        sem_id = semget(SV_SEM_KEY, 1, IPC_CREAT | IPC_EXCL | perms);
+        sem_id = semget(SV_SEM_KEY, 1, IPC_CREAT | IPC_EXCL | OBJ_PERM);
         if (sem_id == -1) {
             perror("sem_get");
             exit(EXIT_FAILURE);

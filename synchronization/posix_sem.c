@@ -28,7 +28,6 @@ void* get_sem(void *arg) {
     printf("use the res %d\n",sem_res);
     printf("releasing the sem\n");
     sem_post(&sem);
-
 }
 
 void posix_sem() {

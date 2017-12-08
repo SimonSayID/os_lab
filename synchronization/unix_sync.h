@@ -13,6 +13,8 @@ void posix_cond();
 
 void posix_sem();
 
+void posix_sem_n();
+
 void posix_bari();
 
 void system_v_sem();

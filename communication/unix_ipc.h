@@ -7,8 +7,6 @@
 
 #include "main.h"
 
-#define OBJ_PERM (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP)
-
 typedef struct msg_s msg_t;
 
 struct msg_s {
