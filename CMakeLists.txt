@@ -13,8 +13,6 @@ file(GLOB SOURCE_FILES
         communication/*.c
         multi/*.h
         multi/*.c
-        scheduling/*.h
-        scheduling/*.c
         synchronization/*.h
         synchronization/*.c)
 
