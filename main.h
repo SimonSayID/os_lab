@@ -13,9 +13,10 @@
 #include <pthread.h>
 #include <sys/msg.h>
 #include <sys/shm.h>
+#include <sys/sem.h> // system v
 #include <sys/stat.h>
 #include <sys/wait.h>
-#include <semaphore.h>
+#include <semaphore.h> //posix
 #include <sys/param.h>
 #include <sys/types.h>
 #include <sys/syscall.h>

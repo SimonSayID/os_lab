@@ -15,6 +15,7 @@ int main() {
 //    unix_pipe();
 //    system_v_shm();
 //    system_v_mq();
+    system_v_sem();
     printf("back to main\n");
     exit(EXIT_SUCCESS);
 }
