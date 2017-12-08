@@ -16,7 +16,7 @@ int main() {
 //    system_v_shm();
 //    system_v_mq();
 //    system_v_sem();
-    posix_sem_n();
+//    posix_sem_n();
     printf("back to main\n");
     exit(EXIT_SUCCESS);
 }
