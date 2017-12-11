@@ -79,5 +79,10 @@ void unix_mmap() {
         printf("parent:share memory new content:%s\n", (char *)address);
         write(fd[1], "/tmp/demo_file.txt", 18);
         wait(&p1);
+        n = remove("/tmp/demo_file.txt");
+        if (n == -1) {
+            perror("parent:remove");
+            exit(EXIT_FAILURE);
+        }
     }
 }
