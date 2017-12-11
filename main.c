@@ -1,8 +1,9 @@
 
 #include "main.h"
 
-#include "communication/unix_ipc.h"
+#include "mmap/unix_mmap.h"
 #include "multi/unix_multi.h"
+#include "communication/unix_ipc.h"
 #include "synchronization/unix_sync.h"
 
 int main() {
@@ -17,6 +18,8 @@ int main() {
 //    system_v_mq();
 //    system_v_sem();
 //    posix_sem_n();
+//    posix_mq();
+//    unix_mmap();
     printf("back to main\n");
     exit(EXIT_SUCCESS);
 }
