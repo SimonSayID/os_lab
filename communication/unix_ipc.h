@@ -20,4 +20,8 @@ void system_v_shm();
 
 void system_v_mq();
 
+void posix_mq();
+
+void posix_shm();
+
 #endif //OS_LAB_OB_IPC_H

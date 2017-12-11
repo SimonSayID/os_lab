@@ -18,6 +18,7 @@ int main() {
 //    system_v_mq();
 //    system_v_sem();
 //    posix_sem_n();
+    posix_shm();
 //    posix_mq();
 //    unix_mmap();
     printf("back to main\n");

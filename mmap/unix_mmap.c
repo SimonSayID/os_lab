@@ -28,7 +28,7 @@ void unix_mmap() {
         int file;
         ssize_t n;
         char *name;
-        char *address;
+        void *address;
 
         close(fd[1]);
         name = (char *)malloc(18);
@@ -51,7 +51,7 @@ void unix_mmap() {
         free(name);
     } else {
         int file;
-        char *address;
+        void *address;
         ssize_t n;
         close(fd[0]);
         file = open("/tmp/demo_file.txt", O_CREAT | O_RDWR | O_TRUNC, OBJ_PERM);
