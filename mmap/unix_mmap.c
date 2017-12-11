@@ -3,15 +3,17 @@
 //
 
 /*
- * url:
- * "http://www.linuxforums.org/forum/programming-scripting/
- * mmap-question-length-parameter-mmap-not-serving-its-purpose-print-192206.html"
+ * linear mmap
  *
  * Linux can only map complete 4 kB pages (4 MB if your kernel uses large pages)
  * - this is a feature of the hardware, and it is impossible to circumvent in software.
  * In other words, even though you only requested one byte,
  * Linux has been forced to round this up to the nearest page size;
  * there is no way to get around this.
+ *
+ * url:
+ * "http://www.linuxforums.org/forum/programming-scripting/
+ * mmap-question-length-parameter-mmap-not-serving-its-purpose-print-192206.html"
  * */
 #include "unix_mmap.h"
 
