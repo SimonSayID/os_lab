@@ -16,6 +16,8 @@ struct msg_s {
 
 void unix_pipe();
 
+void unix_fifo();
+
 void system_v_shm();
 
 void system_v_mq();
