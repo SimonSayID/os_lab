@@ -15,11 +15,21 @@ void unix_fifo() {
         int pfd;
         int cfd;
         msg_t fifo_msg;
+        void *buff;
 
         sleep(1);
 
-        fifo_msg.str = "/tmp/mkfifo_child";
-        fifo_msg.n = 666;
+        fifo_msg.str = (char *)malloc(30 * sizeof(char));
+        memset(fifo_msg.str, 0, 30);
+
+        snprintf(fifo_msg.str , 30, "mkfifo_child#%d", getpid());
+        fifo_msg.n = getpid();
+
+        // serialization
+        buff = malloc(34);
+        memset(buff, 0, 34);
+        memcpy(buff, fifo_msg.str, 30);
+        memcpy(buff + 30, &fifo_msg.n, 4);
 
         r = mkfifo(fifo_msg.str, OBJ_PERM);
         if (r == -1) {
@@ -33,7 +43,7 @@ void unix_fifo() {
             exit(EXIT_FAILURE);
         }
 
-        r = write(pfd, &fifo_msg, sizeof(msg_t));
+        r = write(pfd, buff, 34);
         if (r == -1) {
             perror("child:write");
             exit(EXIT_FAILURE);
@@ -54,12 +64,15 @@ void unix_fifo() {
         printf("child:fifo_msg.str=%s\n",fifo_msg.str);
         printf("child:fifo_msg.n=%d\n",fifo_msg.n);
 
+        free(fifo_msg.str);
+        free(buff);
     } else {
-        ssize_t r;
-        msg_t fifo_msg;
-        char *cfd_path;
         int pfd;
         int cfd;
+        void *buff;
+        msg_t *fifo_msg;
+        char *cfd_path;
+        ssize_t r;
 
         r = mkfifo("/tmp/mkfifo_parent", OBJ_PERM);
         if (r == -1) {
@@ -73,16 +86,26 @@ void unix_fifo() {
             exit(EXIT_FAILURE);
         }
 
-        r = read(pfd, &fifo_msg, sizeof(msg_t));
+        fifo_msg = (msg_t *)malloc(sizeof(msg_t));
+        fifo_msg->str = (char *)malloc(30 * sizeof(char));
+        buff = malloc(34);
+        memset(buff, 0, 34);
+        memset(fifo_msg->str, 0, 30);
+
+        r = read(pfd, buff, 34);
         if (r == -1) {
             perror("parent:read");
             exit(EXIT_FAILURE);
         }
 
-        printf("parent:fifo_msg.str=%s\n",fifo_msg.str);
-        printf("parent:fifo_msg.n=%d\n",fifo_msg.n);
+        memcpy(fifo_msg->str, (char *)buff, 30);
+        memcpy(&fifo_msg->n, buff+30, 4);
 
-        cfd_path = fifo_msg.str;
+        printf("parent:fifo_msg.str=%s\n",fifo_msg->str);
+        printf("parent:fifo_msg.n=%d\n",fifo_msg->n);
+
+
+        cfd_path = fifo_msg->str;
 
         cfd = open(cfd_path, O_WRONLY);
         if (cfd == -1) {
@@ -90,8 +113,8 @@ void unix_fifo() {
             exit(EXIT_FAILURE);
         }
 
-        fifo_msg.str = "Hello World";
-        fifo_msg.n = 999;
+        strcpy(fifo_msg->str, "Hello World");
+        fifo_msg->n = 999;
 
         r = write(cfd, &fifo_msg, sizeof(msg_t));
         if (r == -1) {
@@ -103,5 +126,8 @@ void unix_fifo() {
 
         unlink("/tmp/mkfifo_parent");
         unlink(cfd_path);
+
+        free(buff);
+        free(fifo_msg);
     }
 }
